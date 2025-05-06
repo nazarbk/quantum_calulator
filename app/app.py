@@ -35,61 +35,52 @@ if "last_added_gate" not in st.session_state:
 st.subheader("Apply Quantum Gates")
 
 # Gate selection
-gates = st.selectbox("Choose a quantum gate to apply:", ["I", "X", "Y", "Z", "H", "S", "T", "RX", "RY", "RZ"], key="selectbox_gate")
+selected_gate = st.selectbox("Choose a quantum gate to apply:", ["I", "X", "Y", "Z", "H", "S", "T", "RX", "RY", "RZ"], key="selectbox_gate")
 
 # Optional parameter for rotation gates
 
+# Add gare only if new selection
+current_gate = (selected_gate)
+if current_gate != st.session_state.last_added_gate:
+    st.session_state.gate_sequence.append(current_gate)
+    st.session_state.last_added_gate = current_gate
+
+if st.session_state.gate_sequence:
+    st.subheader("Gate Sequence:")
+    cols = st.columns(len(st.session_state.gate_sequence))
+    for idx, (gate) in enumerate(st.session_state.gate_sequence):
+        label = f"{gate}"
+        with cols[idx]:
+            if st.button(f"{label} ❌", key=f"del_{idx}"):
+                st.session_state.gate_sequence.pop(idx)
+                st.rerun()
 
 # Quantum Circuit
 qc = QuantumCircuit(1)
 
 # Apply selected gate
-for gate in gates:
+for gate in st.session_state.gate_sequence:
     if gate == "I":
         qc.id(0)
-        st.session_state.gate_sequence.append(("I", None))
     elif gate == 'X':
         qc.x(0)
-        st.session_state.gate_sequence.append(("X", None))
     elif gate == 'Y':
         qc.y(0)
-        st.session_state.gate_sequence.append(("Y", None))
     elif gate == 'Z':
         qc.z(0)
-        st.session_state.gate_sequence.append(("Z", None))
     elif gate == 'H':
         qc.h(0)
-        st.session_state.gate_sequence.append(("H", None))
     elif gate == 'S':
         qc.s(0)
-        st.session_state.gate_sequence.append(("S", None))
     elif gate == 'T':
         qc.t(0)
-        st.session_state.gate_sequence.append(("T", None))
     elif gate == 'RX':
         qc.rx(np.pi, 0)
-        st.session_state.gate_sequence.append(("RX", np.pi)) # Default angle
     elif gate == 'RY':
         qc.ry(np.pi, 0)
-        st.session_state.gate_sequence.append(("RY", np.pi))
     elif gate == 'RZ':
         qc.rz(np.pi, 0)
-        st.session_state.gate_sequence.append(("RZ", np.pi))
 
-# Display gate sequence with delete button
-if st.session_state.gate_sequence:
-    st.markdown("### Gate Sequence")
-    for idx, (gate, angle) in enumerate(st.session_state.gate_sequence):
-        col_a, col_b = st.columns([5, 1])
-        with col_a:
-            if angle is not None:
-                st.write(f"{idx + 1}. {gate} (0 = {angle:.2f}rad)")
-            else:
-                st.write(f"{idx + 1}. {gate}")
-        with col_b:
-            if st.button("❌", key=f"delete_{idx}"):
-                st.session_state.gate_sequence.pop(idx)
-                st.experimental_rerun()
 
 # Statevector and Bloch Sphere
 # Get the statevector from the circuit
