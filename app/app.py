@@ -28,6 +28,8 @@ st.markdown(
 # Persistent storage for gate sequence
 if "gate_sequence" not in st.session_state:
     st.session_state.gate_sequence = []
+if "last_added_gate" not in st.session_state:
+    st.session_state.last_added_gate = None
                 
 # Two rows of gate buttons
 st.subheader("Apply Quantum Gates")
