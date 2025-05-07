@@ -25,35 +25,65 @@ st.markdown(
     """
 )
 
-# Persistent storage for gate sequence
+# Inicializar el historial si no existe
 if "gate_sequence" not in st.session_state:
     st.session_state.gate_sequence = []
-if "last_added_gate" not in st.session_state:
-    st.session_state.last_added_gate = None
-                
-# Two rows of gate buttons
+
 st.subheader("Apply Quantum Gates")
 
-# Gate selection
-selected_gate = st.selectbox("Choose a quantum gate to apply:", ["I", "X", "Y", "Z", "H", "S", "T", "RX", "RY", "RZ"], key="selectbox_gate")
+# Row 1
+col1, col2, col3, col4, col5 = st.columns(5)
+with col1:
+    if st.button("I"):
+        st.session_state.gate_sequence.append("I")
+with col2:
+    if st.button("X"):
+        st.session_state.gate_sequence.append("X")
+with col3:
+    if st.button("Y"):
+        st.session_state.gate_sequence.append("Y")
+with col4:
+    if st.button("Z"):
+        st.session_state.gate_sequence.append("Z")
+with col5:
+    if st.button("H"):
+        st.session_state.gate_sequence.append("H")
 
-# Optional parameter for rotation gates
+# Row 2
+col6, col7, col8, col9, col10 = st.columns(5)
+with col6:
+    if st.button("S"):
+        st.session_state.gate_sequence.append("S")
+with col7:
+    if st.button("T"):
+        st.session_state.gate_sequence.append("T")
+with col8:
+    if st.button("RX"):
+        st.session_state.gate_sequence.append("RX")
+with col9:
+    if st.button("RY"):
+        st.session_state.gate_sequence.append("RY")
+with col10:
+    if st.button("RZ"):
+        st.session_state.gate_sequence.append("RZ")
 
-# Add gare only if new selection
-current_gate = (selected_gate)
-if current_gate != st.session_state.last_added_gate:
-    st.session_state.gate_sequence.append(current_gate)
-    st.session_state.last_added_gate = current_gate
+if st.button("Clear all", key="clear_all"):
+    st.session_state.gate_sequence = []
+    st.rerun()
 
+
+    
 if st.session_state.gate_sequence:
     st.subheader("Gate Sequence:")
-    cols = st.columns(len(st.session_state.gate_sequence))
-    for idx, (gate) in enumerate(st.session_state.gate_sequence):
-        label = f"{gate}"
-        with cols[idx]:
-            if st.button(f"{label} ❌", key=f"del_{idx}"):
-                st.session_state.gate_sequence.pop(idx)
-                st.rerun()
+    rows = [st.session_state.gate_sequence[i:i+5] for i in range (0, len(st.session_state.gate_sequence), 5)]
+    for row in rows:
+        cols = st.columns(len(row))
+        for idx, (gate, col) in enumerate(zip(row, cols)):
+            with col:
+                real_idx = (rows.index(row) * 5) + idx
+                if st.button(f"{gate} ❌", key=f"del_{real_idx}"):
+                    st.session_state.gate_sequence.pop(real_idx)
+                    st.rerun()
 
 # Quantum Circuit
 qc = QuantumCircuit(1)
