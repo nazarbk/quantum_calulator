@@ -1,0 +1,87 @@
+.botton-blue{
+    background-color: #4da6ff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+}
+
+.botton-green{
+    background-color: #66cc66;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+}
+
+.st-key-I button,
+.st-key-X button,
+.st-key-Z button,
+.st-key-Y button{
+    background-color: #345a8d;
+    color: white;
+    border: none;
+}
+
+.st-key-I button:hover,
+.st-key-X button:hover,
+.st-key-Z button:hover,
+.st-key-Y button:hover{
+    background-color: white;
+    color: #345a8d;
+    border: none;
+}
+
+.st-key-H button{
+    background-color: #b84a5c;
+    color: white;
+    border: none;
+}
+
+.st-key-H button:hover{
+    background-color: white;
+    color: #b84a5c;
+    border: none;
+}
+
+.st-key-S button,
+.st-key-T button{
+    background-color: #709dbd;
+    color: white;
+    border: none;
+}
+
+.st-key-S button:hover,
+.st-key-T button:hover{
+    background-color: white;
+    color: #709dbd;
+    border: none;
+}
+
+.st-key-RX button,
+.st-key-RY button,
+.st-key-RZ button{
+    background-color: #d47cae;
+    color: white;
+    border: none;
+}
+
+.st-key-RX button:hover,
+.st-key-RY button:hover,
+.st-key-RZ button:hover{
+    background-color: white;
+    color: #d47cae;
+    border: none;
+}
+
+.botton-pink{
+    background-color: #ff99cc;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+}
+
+.botton-red{
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+}
