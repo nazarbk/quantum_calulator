@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pathlib
 
-st.set_page_config(page_title="Quantum Qubit Visualizer", layout="centered")
-st.title("Quantum Qubit Visualizer")
+st.set_page_config(page_title="Quantum Single Qubit Visualizer", layout="centered")
+st.title("Quantum Single Qubit Visualizer")
 st.markdown(
     """
     This app lets you apply a quantum gate to a single qubit and visualize its state.
@@ -88,7 +88,7 @@ if st.session_state.gate_sequence:
         for idx, (gate, col) in enumerate(zip(row, cols)):
             with col:
                 real_idx = (rows.index(row) * 5) + idx
-                if st.button(f"{gate} ❌", key=f"del_{real_idx}", use_container_width=True):
+                if st.button(f"{gate} ❌", key=f"del_{real_idx}", use_container_width=True, type="primary"):
                     st.session_state.gate_sequence.pop(real_idx)
                     st.rerun()
 
@@ -112,11 +112,11 @@ for gate in st.session_state.gate_sequence:
     elif gate == 'T':
         qc.t(0)
     elif gate == 'RX':
-        qc.rx(np.pi, 0)
+        qc.rx(np.pi/2, 0)
     elif gate == 'RY':
-        qc.ry(np.pi, 0)
+        qc.ry(np.pi/2, 0)
     elif gate == 'RZ':
-        qc.rz(np.pi, 0)
+        qc.rz(np.pi/2, 0)
 
 
 # Statevector and Bloch Sphere
@@ -133,12 +133,12 @@ col11, col12 = st.columns(2)
 
 with col11:
     st.subheader("Quantum Circuit:")
-    st.pyplot(qc.draw("mpl"))
+    st.pyplot(qc.draw("mpl"), use_container_width=True)
 
 with col12:
     st.subheader("Bloch Sphere:")
     fig_bloch = plt.figure()
     ax_bloch = fig_bloch.add_subplot(projection='3d')
     plot_bloch_vector(bloch, ax=ax_bloch)
-    st.pyplot(fig_bloch)
+    st.pyplot(fig_bloch, use_container_width=True)
     

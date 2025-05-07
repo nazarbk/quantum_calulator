@@ -13,75 +13,68 @@
 }
 
 .st-key-I button,
-.st-key-X button,
-.st-key-Z button,
-.st-key-Y button{
-    background-color: #345a8d;
+.st-key-X button{
+    background-color: #002d9c;
     color: white;
     border: none;
 }
 
 .st-key-I button:hover,
-.st-key-X button:hover,
-.st-key-Z button:hover,
-.st-key-Y button:hover{
+.st-key-X button:hover{
     background-color: white;
-    color: #345a8d;
+    color: #002d9c;
+    border: none;
+}
+
+.st-key-Y button,
+.st-key-RX button,
+.st-key-RY button,
+.st-key-RZ button{
+    background-color: #9f1853;
+    color: white;
+    border: none;
+}
+
+.st-key-Y button:hover,
+.st-key-RX button:hover,
+.st-key-RY button:hover,
+.st-key-RZ button:hover{
+    background-color: white;
+    color: #9f1853;
+    border: none;
+}
+
+.st-key-Z button,
+.st-key-S button,
+.st-key-T button{
+    background-color: #33b1ff;
+    color: white;
+    border: none;
+}
+
+.st-key-Z button:hover,
+.st-key-S button:hover,
+.st-key-T button:hover{
+    background-color: white;
+    color: #33b1ff;
     border: none;
 }
 
 .st-key-H button{
-    background-color: #b84a5c;
+    background-color: #fa4d56;
     color: white;
     border: none;
 }
 
 .st-key-H button:hover{
     background-color: white;
-    color: #b84a5c;
+    color: #fa4d56;
     border: none;
 }
 
-.st-key-S button,
-.st-key-T button{
-    background-color: #709dbd;
-    color: white;
-    border: none;
-}
-
-.st-key-S button:hover,
-.st-key-T button:hover{
+.stMarkdown .katex{
     background-color: white;
-    color: #709dbd;
-    border: none;
-}
-
-.st-key-RX button,
-.st-key-RY button,
-.st-key-RZ button{
-    background-color: #d47cae;
-    color: white;
-    border: none;
-}
-
-.st-key-RX button:hover,
-.st-key-RY button:hover,
-.st-key-RZ button:hover{
-    background-color: white;
-    color: #d47cae;
-    border: none;
-}
-
-.botton-pink{
-    background-color: #ff99cc;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-}
-
-.botton-red{
-    background-color: #ff4d4d;
-    color: white;
-    border: none;
-    padding: 8px 12px;
+    padding: 12px;
+    border-radius: 10px;
+    color: black;
 }
