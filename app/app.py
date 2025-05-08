@@ -88,7 +88,7 @@ if st.session_state.gate_sequence:
         for idx, (gate, col) in enumerate(zip(row, cols)):
             with col:
                 real_idx = (rows.index(row) * 5) + idx
-                if st.button(f"{gate} ❌", key=f"del_{real_idx}", use_container_width=True, type="primary"):
+                if st.button(f"{gate}", key=f"del_{real_idx}", use_container_width=True, type="primary"):
                     st.session_state.gate_sequence.pop(real_idx)
                     st.rerun()
 
@@ -133,10 +133,17 @@ col11, col12 = st.columns(2)
 
 with col11:
     st.subheader("Quantum Circuit:")
-    st.pyplot(qc.draw("mpl"), use_container_width=True)
 
 with col12:
     st.subheader("Bloch Sphere:")
+
+col13, col14 = st.columns(2, border=True)
+
+with col13:
+    fig_qc = qc.draw("mpl")
+    st.pyplot(fig_qc, use_container_width=True)
+
+with col14:
     fig_bloch = plt.figure()
     ax_bloch = fig_bloch.add_subplot(projection='3d')
     plot_bloch_vector(bloch, ax=ax_bloch)
