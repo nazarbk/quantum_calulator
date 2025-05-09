@@ -73,8 +73,35 @@
 }
 
 .stMarkdown .katex{
-    background-color: white;
+    font-size: 18px;
+    background-color: rgba(255, 255, 255, 0.123);
     padding: 12px;
     border-radius: 10px;
-    color: black;
+    color: white;
+}
+
+.st-key-measure button:hover,
+.st-key-clear_all button:hover{
+    background-color: white;
+    color: rgb(14, 17, 23);
+    border: none;
+}
+
+.st-emotion-cache-954c2p p{
+    color: white;
+}
+
+table thead
+{
+    background-color: rgba(255, 255, 255, 0.123);
+}
+
+.st-emotion-cache-954c2p p,
+.st-emotion-cache-seewz2 p{
+    font-size: 17px;
+}
+
+.st-emotion-cache-726zfe{
+    background-color: #758f92;
+    border: none;
 }

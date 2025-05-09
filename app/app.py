@@ -1,10 +1,13 @@
 import streamlit as st
-from qiskit import QuantumCircuit
+from qiskit import QuantumCircuit, transpile
+from qiskit_aer import Aer
 from qiskit.quantum_info import Statevector
 from qiskit.visualization import plot_bloch_vector
 import matplotlib.pyplot as plt
 import numpy as np
+import plotly.graph_objects as go
 import pathlib
+import pandas as pd
 
 st.set_page_config(page_title="Quantum Single Qubit Visualizer", layout="centered")
 st.title("Quantum Single Qubit Visualizer")
@@ -22,6 +25,8 @@ def load_css(file_path):
 
 css_path = pathlib.Path("assets/styles.css")
 load_css(css_path)
+
+simulator = Aer.get_backend('qasm_simulator')
 
 # Converts a statevector to its Bloch vector manually
 def statevector_to_bloch_vector(state: Statevector):
@@ -55,7 +60,7 @@ with col4:
     if st.button("Z", key="Z", use_container_width=True):
         st.session_state.gate_sequence.append("Z")
 with col5:
-    if st.button("H", key="H", use_container_width=True):
+    if st.button("H", key="H", use_container_width=True, help="Hadamard Gate: Creates superposition of |0⟩ and |1⟩."):
         st.session_state.gate_sequence.append("H")
 
 # Row 2
@@ -76,21 +81,13 @@ with col10:
     if st.button("RZ", key="RZ", use_container_width=True):
         st.session_state.gate_sequence.append("RZ")
 
-if st.button("Clear all", key="clear_all", use_container_width=True):
-    st.session_state.gate_sequence = []
-    st.rerun()
-  
-if st.session_state.gate_sequence:
-    st.subheader("Gate Sequence:")
-    rows = [st.session_state.gate_sequence[i:i+5] for i in range (0, len(st.session_state.gate_sequence), 5)]
-    for row in rows:
-        cols = st.columns(len(row))
-        for idx, (gate, col) in enumerate(zip(row, cols)):
-            with col:
-                real_idx = (rows.index(row) * 5) + idx
-                if st.button(f"{gate}", key=f"del_{real_idx}", use_container_width=True, type="primary"):
-                    st.session_state.gate_sequence.pop(real_idx)
-                    st.rerun()
+
+col15, col16 = st.columns(2)
+
+with col15:
+    if st.button("Clear all", key="clear_all", use_container_width=True):
+            st.session_state.gate_sequence = []
+            st.rerun()
 
 # Quantum Circuit
 qc = QuantumCircuit(1)
@@ -118,6 +115,38 @@ for gate in st.session_state.gate_sequence:
     elif gate == 'RZ':
         qc.rz(np.pi/2, 0)
 
+measurement_result = None
+with col16:
+    if st.button("Measure", key="measure", use_container_width=True):
+        measure_circuit = qc.copy()
+        measure_circuit.measure_all()
+
+        result = simulator.run(transpile(measure_circuit, simulator), shots=1024).result()
+        counts = result.get_counts()
+        measurement_result = counts
+
+if measurement_result:
+    st.subheader("Measurement Result:")
+    
+    # Convert counts to DataFrame
+    counts_df = pd.DataFrame([
+        {"State": key, "Shots": val, "Probability": f"{val/1024:.2%}"}
+        for key, val in measurement_result.items()
+    ])
+
+    st.table(counts_df.sort_values("State"))
+  
+if st.session_state.gate_sequence:
+    st.subheader("Gate Sequence:")
+    rows = [st.session_state.gate_sequence[i:i+5] for i in range (0, len(st.session_state.gate_sequence), 5)]
+    for row in rows:
+        cols = st.columns(len(row))
+        for idx, (gate, col) in enumerate(zip(row, cols)):
+            with col:
+                real_idx = (rows.index(row) * 5) + idx
+                if st.button(f"{gate}", key=f"del_{real_idx}", use_container_width=True, type="primary"):
+                    st.session_state.gate_sequence.pop(real_idx)
+                    st.rerun()
 
 # Statevector and Bloch Sphere
 # Get the statevector from the circuit
@@ -137,10 +166,16 @@ with col11:
 with col12:
     st.subheader("Bloch Sphere:")
 
-col13, col14 = st.columns(2, border=True)
+col13, col14 = st.columns(2, vertical_alignment="center")
 
 with col13:
-    fig_qc = qc.draw("mpl")
+    style = {
+        "backgroundcolor": "#0e1117",
+        "textcolor": "#ffffff",
+        "linecolor": "#ffffff",
+        "maxwidth": "80%"    
+    }
+    fig_qc = qc.draw("mpl", style=style, scale=2.0, fold=4)
     st.pyplot(fig_qc, use_container_width=True)
 
 with col14:
