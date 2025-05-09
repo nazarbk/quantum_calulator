@@ -22,4 +22,5 @@ This project is a **Quantum Single Qubit Visualizer** built with Streamlit, Qisk
     ```bash
     pip install -r requirements.txt
 4. Run the Streamlit app:
+    ```bash
     streamlit run app.py
