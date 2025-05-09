@@ -11,12 +11,6 @@ import pandas as pd
 
 st.set_page_config(page_title="Quantum Single Qubit Visualizer", layout="centered")
 st.title("Quantum Single Qubit Visualizer")
-st.markdown(
-    """
-    This app lets you apply a quantum gate to a single qubit and visualize its state.
-    Choose a gate below and see the resulting state vector and Bloch sphere representation.
-    """
-)
 
 # Load CSS from the 'assets' folder
 def load_css(file_path):
@@ -43,42 +37,87 @@ def statevector_to_bloch_vector(state: Statevector):
 if "gate_sequence" not in st.session_state:
     st.session_state.gate_sequence = []
 
+col20, col21 = st.columns(2)
+
+st.markdown(
+    """
+    This app lets you apply a quantum gate to a single qubit and visualize its state.
+    Choose a gate below and see the resulting state vector and Bloch sphere representation.
+    """
+)
+
+with st.expander("ℹ️ More Info"):
+    st.markdown("""
+    ### Quantum Gates:
+    - **I (Identity)**: Leaves the qubit unchanged.
+    - **X (Pauli-X)**: Flips the qubit state (|0⟩ to |1⟩, |1⟩ to |0⟩).
+    - **Y (Pauli-Y)**: Flips the qubit state and adds a phase of i.
+    - **Z (Pauli-Z)**: Adds a phase of π to the |1⟩ state.
+    - **H (Hadamard)**: Creates a superposition state (|+⟩ or |-⟩).
+    - **S (Phase)**: Adds a phase of π/2 to the |1⟩ state.
+    - **T (T Gate)**: Adds a phase of π/4 to the |1⟩ state.
+    - **RX, RY, RZ (Rotation Gates)**: Rotate the qubit state around the X, Y, Z axis (π/2).
+    
+    ### What does the Measure?
+    - **Measurement** is the process of collapsing the qubit's state into a definite state (|0⟩ or |1⟩).
+    - Before measurement, the qubit exists in a superposition (a combination of |0⟩ and |1⟩).
+    - When you click "Measure", the qubit is measured 1024 times, and the app shows:
+        - **Counts**: How many times each outcome (|0⟩ or |1⟩) was observed.
+        - **Probability**: The relative frequency of each outcome.
+
+    ### What is the Statevector?
+    - The **statevector** represents the quantum state of the qubit.
+    - It's a complex vector with two amplitudes (α and β) representing the probability of the qubit being in |1⟩ or |0⟩.
+    
+    ### What is a Quantum Circuit?
+    - A **quantum circuit** is a sequence of quantum gates applied to one or more qubits.
+    - The circuit is read from the left to right, and each gate modifies the state of the qubit.
+    - In this app, the quantum circuit is shown with the gates you have applied.
+
+
+    ### What is a Bloch Sphere?
+    - The **Bloch Sphere** is a 3D representation of a single qubit's state.
+    - The north pole represents |0⟩, the south pole  represents |1⟩.
+    - The X, Y and Z axes show how the qubit state is oriented.
+    """)
+    
+
 st.subheader("Apply Quantum Gates")
 
 # Row 1
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
-    if st.button("I", key="I", use_container_width=True):
+    if st.button("I", key="I", use_container_width=True, help="Leaves the qubit unchanged."):
         st.session_state.gate_sequence.append("I")
 with col2:
-    if st.button("X", key="X", use_container_width=True):
+    if st.button("X", key="X", use_container_width=True, help="Flips the qubit state (|0⟩ ↔ |1⟩)."):
         st.session_state.gate_sequence.append("X")
 with col3:
-    if st.button("Y", key="Y", use_container_width=True):
+    if st.button("Y", key="Y", use_container_width=True, help="Flips the wubit and adds a phase of i."):
         st.session_state.gate_sequence.append("Y")
 with col4:
-    if st.button("Z", key="Z", use_container_width=True):
+    if st.button("Z", key="Z", use_container_width=True, help="Adds a phase of π to |1⟩."):
         st.session_state.gate_sequence.append("Z")
 with col5:
-    if st.button("H", key="H", use_container_width=True, help="Hadamard Gate: Creates superposition of |0⟩ and |1⟩."):
+    if st.button("H", key="H", use_container_width=True, help="Creates superposition of |0⟩ and |1⟩."):
         st.session_state.gate_sequence.append("H")
 
 # Row 2
 col6, col7, col8, col9, col10 = st.columns(5)
 with col6:
-    if st.button("S", key="S", use_container_width=True):
+    if st.button("S", key="S", use_container_width=True, help="Adds a phase of π to |1⟩."):
         st.session_state.gate_sequence.append("S")
 with col7:
-    if st.button("T", key="T", use_container_width=True):
+    if st.button("T", key="T", use_container_width=True, help="Adds a phase of π/4 to |1⟩."):
         st.session_state.gate_sequence.append("T")
 with col8:
-    if st.button("RX", key="RX", use_container_width=True):
+    if st.button("RX", key="RX", use_container_width=True, help="Rotation around X-axis (π/2)."):
         st.session_state.gate_sequence.append("RX")
 with col9:
-    if st.button("RY", key="RY", use_container_width=True):
+    if st.button("RY", key="RY", use_container_width=True, help="Rotation around Y-axis (π/2)."):
         st.session_state.gate_sequence.append("RY")
 with col10:
-    if st.button("RZ", key="RZ", use_container_width=True):
+    if st.button("RZ", key="RZ", use_container_width=True, help="Rotation around Z-axis (π/2)."):
         st.session_state.gate_sequence.append("RZ")
 
 
