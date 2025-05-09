@@ -24,3 +24,13 @@ This project is a **Quantum Single Qubit Visualizer** built with Streamlit, Qisk
 4. Run the Streamlit app:
     ```bash
     streamlit run app.py
+
+## 📌 How it works
+- The app uses **Qiskit** to build the quantum circuit and calculate the statevector.
+- The **Bloch Sphere** is visualized using Matplotlib.
+- The **measurement** are displayed in a clean and elegant table.
+- The help section (ℹ️ Info) provides clear explanations of each concept.
+
+## ✅ Credits
+- Built by Nazar Blanco
+- Powered by Streamlit, Qiskit and Matplotlib.

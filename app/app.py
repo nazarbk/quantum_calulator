@@ -33,7 +33,6 @@ def statevector_to_bloch_vector(state: Statevector):
 
     return [x, y, z]
 
-# Inicializar el historial si no existe
 if "gate_sequence" not in st.session_state:
     st.session_state.gate_sequence = []
 
