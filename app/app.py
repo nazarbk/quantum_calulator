@@ -210,13 +210,13 @@ with col11:
             "linecolor": "#ffffff",
             "maxwidth": "80%"    
         }
-        fig_qc = qc.draw("mpl", style=style, scale=2.0, fold=4)
-        st.pyplot(fig_qc, use_container_width=True)
+    fig_qc = qc.draw("mpl", style=style, scale=2.0, fold=4)
+    st.pyplot(fig_qc, use_container_width=True)
 
 with col12:
     st.subheader("Bloch Sphere:")
     fig_bloch = plt.figure()
-        ax_bloch = fig_bloch.add_subplot(projection='3d')
-        plot_bloch_vector(bloch, ax=ax_bloch)
-        st.pyplot(fig_bloch, use_container_width=True)
+    ax_bloch = fig_bloch.add_subplot(projection='3d')
+    plot_bloch_vector(bloch, ax=ax_bloch)
+    st.pyplot(fig_bloch, use_container_width=True)
     
