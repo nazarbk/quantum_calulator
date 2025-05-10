@@ -9,7 +9,11 @@ import plotly.graph_objects as go
 import pathlib
 import pandas as pd
 
-st.set_page_config(page_title="Quantum Single Qubit Visualizer", layout="centered")
+st.set_page_config(
+    page_title="Quantum Single Qubit Visualizer",
+    page_icon="assets/favicon.png",
+    layout="centered"
+)
 st.title("Quantum Single Qubit Visualizer")
 
 # Load CSS from the 'assets' folder
