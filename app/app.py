@@ -204,25 +204,19 @@ col11, col12 = st.columns(2)
 
 with col11:
     st.subheader("Quantum Circuit:")
+    style = {
+            "backgroundcolor": "#0e1117",
+            "textcolor": "#ffffff",
+            "linecolor": "#ffffff",
+            "maxwidth": "80%"    
+        }
+        fig_qc = qc.draw("mpl", style=style, scale=2.0, fold=4)
+        st.pyplot(fig_qc, use_container_width=True)
 
 with col12:
     st.subheader("Bloch Sphere:")
-
-col13, col14 = st.columns(2, vertical_alignment="center")
-
-with col13:
-    style = {
-        "backgroundcolor": "#0e1117",
-        "textcolor": "#ffffff",
-        "linecolor": "#ffffff",
-        "maxwidth": "80%"    
-    }
-    fig_qc = qc.draw("mpl", style=style, scale=2.0, fold=4)
-    st.pyplot(fig_qc, use_container_width=True)
-
-with col14:
     fig_bloch = plt.figure()
-    ax_bloch = fig_bloch.add_subplot(projection='3d')
-    plot_bloch_vector(bloch, ax=ax_bloch)
-    st.pyplot(fig_bloch, use_container_width=True)
+        ax_bloch = fig_bloch.add_subplot(projection='3d')
+        plot_bloch_vector(bloch, ax=ax_bloch)
+        st.pyplot(fig_bloch, use_container_width=True)
     
